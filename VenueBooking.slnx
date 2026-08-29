@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="VenueBooking.Api/VenueBooking.Api.csproj" />
+  <Project Path="VenueBooking.BussinesLogic/VenueBooking.BussinesLogic.csproj" />
+  <Project Path="VenueBooking.DataAccess/VenueBooking.DataAccess.csproj" />
+  <Project Path="VenueBooking.Domain/VenueBooking.Domain.csproj" />
+</Solution>
