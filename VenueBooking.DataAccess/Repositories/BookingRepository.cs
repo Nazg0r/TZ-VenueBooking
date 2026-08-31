@@ -1,0 +1,36 @@
+using Microsoft.EntityFrameworkCore;
+
+using VenueBooking.DataAccess.Data;
+using VenueBooking.Domain.Enums;
+using VenueBooking.Domain.Interfaces.Repositories;
+using VenueBooking.Domain.Models;
+
+namespace VenueBooking.DataAccess.Repositories;
+
+public class BookingRepository(VenueBookingContext context)
+    : BaseRepository<Booking>(context), IBookingRepository
+{
+    public async Task<IReadOnlyList<Booking>> GetByPeriodAsync(
+        DateTime fromUtc,
+        DateTime toUtc,
+        CancellationToken cancellationToken = default)
+        => await Set
+            .AsNoTracking()
+            .Where(booking => booking.Status != BookingStatus.Cancelled
+                && booking.StartUtc < toUtc
+                && booking.EndUtc > fromUtc)
+            .OrderBy(booking => booking.StartUtc)
+            .ToListAsync(cancellationToken);
+
+    public Task<bool> HasOverlapAsync(
+        Guid venueId,
+        DateTime startUtc,
+        DateTime endUtc,
+        CancellationToken cancellationToken = default)
+        => Set
+            .AsNoTracking()
+            .AnyAsync(booking => booking.VenueId == venueId
+                && booking.Status != BookingStatus.Cancelled
+                && booking.StartUtc < endUtc
+                && booking.EndUtc > startUtc, cancellationToken);
+}
