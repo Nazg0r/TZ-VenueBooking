@@ -15,7 +15,10 @@ public interface IVenueService
         IReadOnlyList<Guid>? serviceIds,
         CancellationToken cancellationToken = default);
 
-    Task<Result> UpdateAsync(Venue updatedVenue, CancellationToken cancellationToken = default);
+    Task<Result> UpdateAsync(
+        Venue updatedVenue,
+        IReadOnlyList<Guid>? serviceIds,
+        CancellationToken cancellationToken = default);
 
     Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 }

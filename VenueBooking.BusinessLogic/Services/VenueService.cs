@@ -28,6 +28,7 @@ public sealed class VenueService(
         // фільтрація залів, які відповідають вимогам щодо місткості та не заброньовані
         IReadOnlyList<Venue> available = venues
             .Where(venue => venue.Capacity >= request.Capacity && !bookedVenueIds.Contains(venue.Id))
+            .OrderBy(venue => venue.Name)
             .ToList();
 
         return Result<IReadOnlyList<Venue>>.Success(available);
@@ -49,15 +50,25 @@ public sealed class VenueService(
         return newVenue;
     }
 
-    public async Task<Result> UpdateAsync(Venue updatedVenue, CancellationToken cancellationToken = default)
+    public async Task<Result> UpdateAsync(
+        Venue updatedVenue,
+        IReadOnlyList<Guid>? serviceIds,
+        CancellationToken cancellationToken = default)
     {
         // пошук та перевірка наявності залу для оновлення
         var existing = await venueRepository.GetByIdAsync(updatedVenue.Id, cancellationToken);
         if (existing is null) return VenueErrors.NotFound(updatedVenue.Id);
 
+        // отримання нового набору послуг за заданими ідентифікаторами
+        var servicesResult = await ResolveCatalogServicesAsync(serviceIds, cancellationToken);
+        if (servicesResult.IsFailure) return servicesResult.Error;
+
         existing.Name = updatedVenue.Name;
         existing.Capacity = updatedVenue.Capacity;
         existing.BasePricePerHour = updatedVenue.BasePricePerHour;
+
+        existing.Services.Clear();
+        foreach (var service in servicesResult.Value) existing.Services.Add(service);
 
         await venueRepository.UpdateAsync(existing, cancellationToken);
 

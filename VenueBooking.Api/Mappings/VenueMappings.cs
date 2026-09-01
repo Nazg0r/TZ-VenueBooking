@@ -35,6 +35,7 @@ public static class VenueMappings
             venue.Capacity,
             venue.BasePricePerHour,
             venue.Services
+                .OrderBy(service => service.Name)
                 .Select(service => new ServiceResponseDto(service.Id, service.Name, service.Price))
                 .ToList());
 }

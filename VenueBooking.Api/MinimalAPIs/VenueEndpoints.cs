@@ -35,7 +35,7 @@ public static class VenueEndpoints
         group.MapPut("/{id:guid}",
             async (Guid id, VenueUpdateDto dto, IVenueService venueService, CancellationToken cancellationToken) =>
             {
-                var result = await venueService.UpdateAsync(dto.ToModel(id), cancellationToken);
+                var result = await venueService.UpdateAsync(dto.ToModel(id), dto.ServiceIds, cancellationToken);
 
                 return result.ToNoContent();
             })
