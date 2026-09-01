@@ -24,11 +24,6 @@ public class Result
     public static Result Success() => new(true, Error.None);
     public static Result Failure(Error error) => new(false, error);
 
-    public TResult Match<TResult>(
-        Func<TResult> onSuccess,
-        Func<Error, TResult> onFailure)
-        => IsSuccess ? onSuccess() : onFailure(Error);
-
     // перевизначення оператору неявного перетворення Error для зручності створення результату
     public static implicit operator Result(Error error) => Failure(error);
 }
@@ -49,11 +44,6 @@ public sealed class Result<T> : Result
 
     public static Result<T> Create(T? value) =>
         value is not null ? Success(value) : Failure(Error.NullValue);
-
-    public TResult Match<TResult>(
-        Func<T, TResult> onSuccess,
-        Func<Error, TResult> onFailure)
-        => IsSuccess ? onSuccess(Value) : onFailure(Error);
 
     // перевизначення операторів для зручності створення результатів через неявне перетворення
     public static implicit operator Result<T>(T? value) => Create(value);
