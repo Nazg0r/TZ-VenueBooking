@@ -12,6 +12,9 @@ public sealed class VenueService(
     IServiceRepository serviceRepository,
     IBookingRepository bookingRepository) : IVenueService
 {
+    public async Task<Result<IReadOnlyList<Venue>>> GetAllAsync(CancellationToken cancellationToken = default)
+        => Result<IReadOnlyList<Venue>>.Success(await venueRepository.GetAllAsync(cancellationToken));
+
     public async Task<Result<IReadOnlyList<Venue>>> FindAvailableAsync(
         AvailableVenuesRequest request,
         CancellationToken cancellationToken = default)

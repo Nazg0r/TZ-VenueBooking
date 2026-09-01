@@ -13,6 +13,14 @@ public static class BookingEndpoints
         const string prefix = "api/bookings";
         var group = app.MapGroup(prefix).WithTags("Bookings");
 
+        group.MapGet("",
+            async (IBookingService bookingService, CancellationToken cancellationToken) =>
+            {
+                var result = await bookingService.GetAllAsync(cancellationToken);
+
+                return result.ToOk(bookings => bookings.Select(booking => booking.ToResponse()).ToList());
+            });
+
         group.MapPost("",
             async (BookDto dto, IBookingService bookingService, CancellationToken cancellationToken) =>
             {

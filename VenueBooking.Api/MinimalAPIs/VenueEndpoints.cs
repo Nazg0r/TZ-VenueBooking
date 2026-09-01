@@ -13,6 +13,14 @@ public static class VenueEndpoints
         const string prefix = "api/venues";
         var group = app.MapGroup(prefix).WithTags("Venues");
 
+        group.MapGet("",
+            async (IVenueService venueService, CancellationToken cancellationToken) =>
+            {
+                var result = await venueService.GetAllAsync(cancellationToken);
+
+                return result.ToOk(venues => venues.Select(venue => venue.ToResponse()).ToList());
+            });
+
         group.MapGet("/available",
             async ([AsParameters] FindAvailableVenuesDto dto, IVenueService venueService,
                 CancellationToken cancellationToken) =>

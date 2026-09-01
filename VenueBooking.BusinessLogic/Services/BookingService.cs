@@ -15,6 +15,15 @@ public sealed class BookingService(
     IPricingRuleRepository pricingRuleRepository,
     RentalPriceCalculator priceCalculator) : IBookingService
 {
+    public async Task<Result<IReadOnlyList<Booking>>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        var bookings = await bookingRepository.GetAllAsync(cancellationToken);
+
+        IReadOnlyList<Booking> ordered = bookings.OrderBy(booking => booking.StartUtc).ToList();
+
+        return Result<IReadOnlyList<Booking>>.Success(ordered);
+    }
+
     public async Task<Result<BookingConfirmation>> BookAsync(
         BookingRequest request,
         CancellationToken cancellationToken = default)

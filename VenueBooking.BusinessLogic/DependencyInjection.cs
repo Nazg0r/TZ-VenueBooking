@@ -14,6 +14,7 @@ public static class DependencyInjection
         services.AddSingleton<RentalPriceCalculator>();
 
         services.AddScoped<IVenueService, VenueService>();
+        services.AddScoped<IServiceService, ServiceService>();
         services.AddScoped<IBookingService, BookingService>();
 
         return services;

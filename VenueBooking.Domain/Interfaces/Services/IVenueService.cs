@@ -6,6 +6,8 @@ namespace VenueBooking.Domain.Interfaces.Services;
 
 public interface IVenueService
 {
+    Task<Result<IReadOnlyList<Venue>>> GetAllAsync(CancellationToken cancellationToken = default);
+
     Task<Result<IReadOnlyList<Venue>>> FindAvailableAsync(
         AvailableVenuesRequest request,
         CancellationToken cancellationToken = default);
