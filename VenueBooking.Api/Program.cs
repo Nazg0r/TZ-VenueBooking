@@ -1,32 +1,35 @@
-using VenueBooking.Api.MinimalAPIs;
+п»їusing VenueBooking.Api.MinimalAPIs;
 using VenueBooking.BusinessLogic;
 using VenueBooking.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Підключення шару DataAccess
+// РџС–РґРєР»СЋС‡РµРЅРЅСЏ С€Р°СЂСѓ DataAccess
 builder.Services.AddDataAccess(builder.Configuration);
-// Підключення шару BusinessLogic
+// РџС–РґРєР»СЋС‡РµРЅРЅСЏ С€Р°СЂСѓ BusinessLogic
 builder.Services.AddBusinessLogic();
-// Підключення ProblemDetails для стандартизованого оброблення помилок
+// РџС–РґРєР»СЋС‡РµРЅРЅСЏ ProblemDetails РґР»СЏ СЃС‚Р°РЅРґР°СЂС‚РёР·РѕРІР°РЅРѕРіРѕ РѕР±СЂРѕР±Р»РµРЅРЅСЏ РїРѕРјРёР»РѕРє
 builder.Services.AddProblemDetails();
-// Підключення Validation для валідації DTO через анотації
+// РџС–РґРєР»СЋС‡РµРЅРЅСЏ Validation РґР»СЏ РІР°Р»С–РґР°С†С–С— DTO С‡РµСЂРµР· Р°РЅРѕС‚Р°С†С–С—
 builder.Services.AddValidation();
-// Підключення OpenAPI для генерації документації API
+// РџС–РґРєР»СЋС‡РµРЅРЅСЏ OpenAPI РґР»СЏ РіРµРЅРµСЂР°С†С–С— РґРѕРєСѓРјРµРЅС‚Р°С†С–С— API
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Middleware для глобального оброблення помилок
+// РќР°РїРѕРІРЅРµРЅРЅСЏ Р±Р°Р·Рё РґР°РЅРёС… РїРѕС‡Р°С‚РєРѕРІРёРјРё РґР°РЅРёРјРё
+await app.Services.InitializeDatabaseAsync();
+
+// Middleware РґР»СЏ РіР»РѕР±Р°Р»СЊРЅРѕРіРѕ РѕР±СЂРѕР±Р»РµРЅРЅСЏ РїРѕРјРёР»РѕРє
 app.UseExceptionHandler();
-// Middleware для переадресації HTTP на HTTPS
+// Middleware РґР»СЏ РїРµСЂРµР°РґСЂРµСЃР°С†С–С— HTTP РЅР° HTTPS
 app.UseHttpsRedirection();
 
-// Маршрут для OpenAPI документації та Swagger UI
+// РњР°СЂС€СЂСѓС‚ РґР»СЏ OpenAPI РґРѕРєСѓРјРµРЅС‚Р°С†С–С— С‚Р° Swagger UI
 app.MapOpenApi();
 app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "VenueBooking API v1"));
 
-// Маршрути для VenueBooking API 
+// РњР°СЂС€СЂСѓС‚Рё РґР»СЏ VenueBooking API 
 app.MapApiEndpoints();
 
 app.Run();
