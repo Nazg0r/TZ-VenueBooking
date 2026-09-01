@@ -1,4 +1,4 @@
-using VenueBooking.Domain.Contracts;
+п»їusing VenueBooking.Domain.Contracts;
 using VenueBooking.Domain.Enums;
 using VenueBooking.Domain.Errors;
 using VenueBooking.Domain.Interfaces.Repositories;
@@ -25,18 +25,18 @@ public sealed class BookingService(
         var venue = await venueRepository.GetByIdAsync(request.VenueId, cancellationToken);
         if (venue is null) return VenueErrors.NotFound(request.VenueId);
 
-        // перевірка на наявність бронювань для даного залу в заданий період
+        // РїРµСЂРµРІС–СЂРєР° РЅР° РЅР°СЏРІРЅС–СЃС‚СЊ Р±СЂРѕРЅСЋРІР°РЅСЊ РґР»СЏ РґР°РЅРѕРіРѕ Р·Р°Р»Сѓ РІ Р·Р°РґР°РЅРёР№ РїРµСЂС–РѕРґ
         if (await bookingRepository.HasOverlapAsync(request.VenueId, request.StartUtc, request.EndUtc,
                 cancellationToken))
             return BookingErrors.VenueAlreadyBooked;
 
-        // отримання існуючих послуг з каталогу за їхніми ідентифікаторами
+        // РѕС‚СЂРёРјР°РЅРЅСЏ С–СЃРЅСѓСЋС‡РёС… РїРѕСЃР»СѓРі Р· РєР°С‚Р°Р»РѕРіСѓ Р·Р° С—С…РЅС–РјРё С–РґРµРЅС‚РёС„С–РєР°С‚РѕСЂР°РјРё
         var servicesResult = ResolveServices(venue, request.ServiceIds);
         if (servicesResult.IsFailure) return servicesResult.Error;
 
         var pricingRules = await pricingRuleRepository.GetAllAsync(cancellationToken);
 
-        // розрахунок вартості оренди залу на основі базової ціни та правил ціноутворення
+        // СЂРѕР·СЂР°С…СѓРЅРѕРє РІР°СЂС‚РѕСЃС‚С– РѕСЂРµРЅРґРё Р·Р°Р»Сѓ РЅР° РѕСЃРЅРѕРІС– Р±Р°Р·РѕРІРѕС— С†С–РЅРё С‚Р° РїСЂР°РІРёР» С†С–РЅРѕСѓС‚РІРѕСЂРµРЅРЅСЏ
         var rentalCost = priceCalculator.CalculateRentalCost(
             venue.BasePricePerHour,
             TimeOnly.FromDateTime(request.StartUtc),
@@ -69,7 +69,7 @@ public sealed class BookingService(
         return new BookingConfirmation(booking.Id, booking.RentalCost, booking.ServicesCost, booking.TotalCost);
     }
 
-    // Перевірка правильності періоду бронювання
+    // РџРµСЂРµРІС–СЂРєР° РїСЂР°РІРёР»СЊРЅРѕСЃС‚С– РїРµСЂС–РѕРґСѓ Р±СЂРѕРЅСЋРІР°РЅРЅСЏ
     private static Result ValidatePeriod(BookingRequest request)
     {
         if (request.EndUtc <= request.StartUtc) return BookingErrors.InvalidPeriod;

@@ -1,11 +1,11 @@
-namespace VenueBooking.Domain.Models;
+п»їnamespace VenueBooking.Domain.Models;
 
-// Базова модель сутності
+// Р‘Р°Р·РѕРІР° РјРѕРґРµР»СЊ СЃСѓС‚РЅРѕСЃС‚С–
 public abstract class Entity
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    // Дата та час створення сутності в UTC
+    // Р”Р°С‚Р° С‚Р° С‡Р°СЃ СЃС‚РІРѕСЂРµРЅРЅСЏ СЃСѓС‚РЅРѕСЃС‚С– РІ UTC
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
-    // Дата та час оновлення сутності в UTC
+    // Р”Р°С‚Р° С‚Р° С‡Р°СЃ РѕРЅРѕРІР»РµРЅРЅСЏ СЃСѓС‚РЅРѕСЃС‚С– РІ UTC
     public DateTime? UpdatedAtUtc { get; set; }
 }

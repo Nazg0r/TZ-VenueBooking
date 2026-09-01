@@ -1,4 +1,4 @@
-using VenueBooking.Domain.Contracts;
+п»їusing VenueBooking.Domain.Contracts;
 using VenueBooking.Domain.Errors;
 using VenueBooking.Domain.Interfaces.Repositories;
 using VenueBooking.Domain.Interfaces.Services;
@@ -18,14 +18,14 @@ public sealed class VenueService(
     {
         if (request.EndUtc <= request.StartUtc) return BookingErrors.InvalidPeriod;
 
-        // отримання усіх залів
+        // РѕС‚СЂРёРјР°РЅРЅСЏ СѓСЃС–С… Р·Р°Р»С–РІ
         var venues = await venueRepository.GetAllAsync(cancellationToken);
-        // отримання усіх бронювань, що перетинаються з заданим періодом
+        // РѕС‚СЂРёРјР°РЅРЅСЏ СѓСЃС–С… Р±СЂРѕРЅСЋРІР°РЅСЊ, С‰Рѕ РїРµСЂРµС‚РёРЅР°СЋС‚СЊСЃСЏ Р· Р·Р°РґР°РЅРёРј РїРµСЂС–РѕРґРѕРј
         var overlappingBookings =
             await bookingRepository.GetByPeriodAsync(request.StartUtc, request.EndUtc, cancellationToken);
         var bookedVenueIds = overlappingBookings.Select(booking => booking.VenueId).ToHashSet();
 
-        // фільтрація залів, які відповідають вимогам щодо місткості та не заброньовані
+        // С„С–Р»СЊС‚СЂР°С†С–СЏ Р·Р°Р»С–РІ, СЏРєС– РІС–РґРїРѕРІС–РґР°СЋС‚СЊ РІРёРјРѕРіР°Рј С‰РѕРґРѕ РјС–СЃС‚РєРѕСЃС‚С– С‚Р° РЅРµ Р·Р°Р±СЂРѕРЅСЊРѕРІР°РЅС–
         IReadOnlyList<Venue> available = venues
             .Where(venue => venue.Capacity >= request.Capacity && !bookedVenueIds.Contains(venue.Id))
             .ToList();
@@ -38,7 +38,7 @@ public sealed class VenueService(
         IReadOnlyList<Guid>? serviceIds,
         CancellationToken cancellationToken = default)
     {
-        // отримання існуючих послуг з каталогу за їхніми ідентифікаторами
+        // РѕС‚СЂРёРјР°РЅРЅСЏ С–СЃРЅСѓСЋС‡РёС… РїРѕСЃР»СѓРі Р· РєР°С‚Р°Р»РѕРіСѓ Р·Р° С—С…РЅС–РјРё С–РґРµРЅС‚РёС„С–РєР°С‚РѕСЂР°РјРё
         var servicesResult = await ResolveCatalogServicesAsync(serviceIds, cancellationToken);
         if (servicesResult.IsFailure) return servicesResult.Error;
 
@@ -51,7 +51,7 @@ public sealed class VenueService(
 
     public async Task<Result> UpdateAsync(Venue updatedVenue, CancellationToken cancellationToken = default)
     {
-        // пошук та перевірка наявності залу для оновлення
+        // РїРѕС€СѓРє С‚Р° РїРµСЂРµРІС–СЂРєР° РЅР°СЏРІРЅРѕСЃС‚С– Р·Р°Р»Сѓ РґР»СЏ РѕРЅРѕРІР»РµРЅРЅСЏ
         var existing = await venueRepository.GetByIdAsync(updatedVenue.Id, cancellationToken);
         if (existing is null) return VenueErrors.NotFound(updatedVenue.Id);
 

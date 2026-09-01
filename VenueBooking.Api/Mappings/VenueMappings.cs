@@ -1,11 +1,11 @@
-using VenueBooking.Api.DTOs.Request;
+п»їusing VenueBooking.Api.DTOs.Request;
 using VenueBooking.Api.DTOs.Response;
 using VenueBooking.Domain.Contracts;
 using VenueBooking.Domain.Models;
 
 namespace VenueBooking.Api.Mappings;
 
-// Клас з розширеннями для перетворень DTO залів у доменні об'єкти та навпаки
+// РљР»Р°СЃ Р· СЂРѕР·С€РёСЂРµРЅРЅСЏРјРё РґР»СЏ РїРµСЂРµС‚РІРѕСЂРµРЅСЊ DTO Р·Р°Р»С–РІ Сѓ РґРѕРјРµРЅРЅС– РѕР±'С”РєС‚Рё С‚Р° РЅР°РІРїР°РєРё
 public static class VenueMappings
 {
     public static AvailableVenuesRequest ToRequest(this FindAvailableVenuesDto dto)

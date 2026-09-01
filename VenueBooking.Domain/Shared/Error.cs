@@ -1,4 +1,4 @@
-namespace VenueBooking.Domain.Shared;
+﻿namespace VenueBooking.Domain.Shared;
 
 public enum ErrorType
 {

@@ -1,4 +1,4 @@
-namespace VenueBooking.Api.DTOs.Response;
+﻿namespace VenueBooking.Api.DTOs.Response;
 
 public record VenueResponseDto(
     Guid Id,

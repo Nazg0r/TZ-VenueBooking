@@ -1,4 +1,4 @@
-using VenueBooking.Domain.Enums;
+﻿using VenueBooking.Domain.Enums;
 
 namespace VenueBooking.Domain.Models;
 

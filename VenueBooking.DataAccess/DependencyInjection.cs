@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+п»їusing Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +10,7 @@ namespace VenueBooking.DataAccess;
 
 public static class DependencyInjection
 {
-    // Розширення, яке агрегує підключення бази дани та реєстрацію репозиторіїв у контейнері DI
+    // Р РѕР·С€РёСЂРµРЅРЅСЏ, СЏРєРµ Р°РіСЂРµРіСѓС” РїС–РґРєР»СЋС‡РµРЅРЅСЏ Р±Р°Р·Рё РґР°РЅРё С‚Р° СЂРµС”СЃС‚СЂР°С†С–СЋ СЂРµРїРѕР·РёС‚РѕСЂС–С—РІ Сѓ РєРѕРЅС‚РµР№РЅРµСЂС– DI
     public static IServiceCollection AddDataAccess(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection")

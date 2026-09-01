@@ -1,4 +1,4 @@
-using Microsoft.Extensions.DependencyInjection;
+п»їusing Microsoft.Extensions.DependencyInjection;
 
 using VenueBooking.BusinessLogic.Services;
 using VenueBooking.Domain.Interfaces.Services;
@@ -8,7 +8,7 @@ namespace VenueBooking.BusinessLogic;
 
 public static class DependencyInjection
 {
-    // Розширення, яке агрегує підключення сервісів у контейнері DI
+    // Р РѕР·С€РёСЂРµРЅРЅСЏ, СЏРєРµ Р°РіСЂРµРіСѓС” РїС–РґРєР»СЋС‡РµРЅРЅСЏ СЃРµСЂРІС–СЃС–РІ Сѓ РєРѕРЅС‚РµР№РЅРµСЂС– DI
     public static IServiceCollection AddBusinessLogic(this IServiceCollection services)
     {
         services.AddSingleton<RentalPriceCalculator>();

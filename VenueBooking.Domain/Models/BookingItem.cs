@@ -1,6 +1,6 @@
-namespace VenueBooking.Domain.Models;
+п»їnamespace VenueBooking.Domain.Models;
 
-// Модель фіксованої послуги бронювання
+// РњРѕРґРµР»СЊ С„С–РєСЃРѕРІР°РЅРѕС— РїРѕСЃР»СѓРіРё Р±СЂРѕРЅСЋРІР°РЅРЅСЏ
 public class BookingItem
 {
     public Guid ServiceId { get; set; }

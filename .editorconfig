@@ -24,6 +24,9 @@ indent_size = 2
 
 #### Core EditorConfig Options ####
 
+# Encoding (BOM keeps non-ASCII literals intact regardless of the compiler's system codepage)
+charset = utf-8-bom
+
 # Indentation and spacing
 indent_size = 4
 tab_width = 4

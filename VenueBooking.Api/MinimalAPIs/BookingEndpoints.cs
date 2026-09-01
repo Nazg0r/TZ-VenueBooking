@@ -1,4 +1,4 @@
-using VenueBooking.Api.DTOs.Request;
+п»їusing VenueBooking.Api.DTOs.Request;
 using VenueBooking.Api.Extensions;
 using VenueBooking.Api.Mappings;
 using VenueBooking.Domain.Interfaces.Services;
@@ -7,7 +7,7 @@ namespace VenueBooking.Api.MinimalAPIs;
 
 public static class BookingEndpoints
 {
-    // Розширення, яке додає маршрути для обробки запитів, пов'язаних із бронюванням.
+    // Р РѕР·С€РёСЂРµРЅРЅСЏ, СЏРєРµ РґРѕРґР°С” РјР°СЂС€СЂСѓС‚Рё РґР»СЏ РѕР±СЂРѕР±РєРё Р·Р°РїРёС‚С–РІ, РїРѕРІ'СЏР·Р°РЅРёС… С–Р· Р±СЂРѕРЅСЋРІР°РЅРЅСЏРј.
     public static IEndpointRouteBuilder MapBookingEndpoints(this IEndpointRouteBuilder app)
     {
         const string prefix = "api/bookings";

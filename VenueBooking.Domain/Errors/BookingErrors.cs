@@ -1,4 +1,4 @@
-using VenueBooking.Domain.Shared;
+﻿using VenueBooking.Domain.Shared;
 
 namespace VenueBooking.Domain.Errors;
 

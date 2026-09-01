@@ -1,6 +1,6 @@
-namespace VenueBooking.Domain.Models;
+п»їnamespace VenueBooking.Domain.Models;
 
-// Модель залу
+// РњРѕРґРµР»СЊ Р·Р°Р»Сѓ
 public class Venue : Entity
 {
     public required string Name { get; set; }

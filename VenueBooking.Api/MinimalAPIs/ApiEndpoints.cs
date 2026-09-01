@@ -1,4 +1,4 @@
-namespace VenueBooking.Api.MinimalAPIs;
+﻿namespace VenueBooking.Api.MinimalAPIs;
 
 public static class ApiEndpoints
 {

@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+п»їusing Microsoft.EntityFrameworkCore;
 
 using VenueBooking.DataAccess.Data;
 using VenueBooking.Domain.Enums;
@@ -10,7 +10,7 @@ namespace VenueBooking.DataAccess.Repositories;
 public class BookingRepository(VenueBookingContext context)
     : BaseRepository<Booking>(context), IBookingRepository
 {
-    // Отримання бронювань за період часу
+    // РћС‚СЂРёРјР°РЅРЅСЏ Р±СЂРѕРЅСЋРІР°РЅСЊ Р·Р° РїРµСЂС–РѕРґ С‡Р°СЃСѓ
     public async Task<IReadOnlyList<Booking>> GetByPeriodAsync(
         DateTime fromUtc,
         DateTime toUtc,
@@ -23,7 +23,7 @@ public class BookingRepository(VenueBookingContext context)
             .OrderBy(booking => booking.StartUtc)
             .ToListAsync(cancellationToken);
 
-    // Перевірка наявності перекриття бронювань для конкретного залу
+    // РџРµСЂРµРІС–СЂРєР° РЅР°СЏРІРЅРѕСЃС‚С– РїРµСЂРµРєСЂРёС‚С‚СЏ Р±СЂРѕРЅСЋРІР°РЅСЊ РґР»СЏ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ Р·Р°Р»Сѓ
     public Task<bool> HasOverlapAsync(
         Guid venueId,
         DateTime startUtc,

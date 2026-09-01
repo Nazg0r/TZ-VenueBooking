@@ -1,4 +1,4 @@
-namespace VenueBooking.Domain.Models;
+﻿namespace VenueBooking.Domain.Models;
 
 // Модель правила ціноутворення для певного часового проміжку
 public class PricingRule : Entity

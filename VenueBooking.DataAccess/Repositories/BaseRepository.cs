@@ -1,11 +1,11 @@
-using Microsoft.EntityFrameworkCore;
+п»їusing Microsoft.EntityFrameworkCore;
 
 using VenueBooking.DataAccess.Data;
 using VenueBooking.Domain.Interfaces.Repositories;
 using VenueBooking.Domain.Models;
 
 namespace VenueBooking.DataAccess.Repositories;
-// Базовий репозиторій, який реалізує загальні методи для роботи з сутностями в базі даних
+// Р‘Р°Р·РѕРІРёР№ СЂРµРїРѕР·РёС‚РѕСЂС–Р№, СЏРєРёР№ СЂРµР°Р»С–Р·СѓС” Р·Р°РіР°Р»СЊРЅС– РјРµС‚РѕРґРё РґР»СЏ СЂРѕР±РѕС‚Рё Р· СЃСѓС‚РЅРѕСЃС‚СЏРјРё РІ Р±Р°Р·С– РґР°РЅРёС…
 public class BaseRepository<T>(VenueBookingContext context) : IRepository<T>
     where T : Entity
 {

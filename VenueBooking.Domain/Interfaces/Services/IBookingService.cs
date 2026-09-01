@@ -1,4 +1,4 @@
-using VenueBooking.Domain.Contracts;
+﻿using VenueBooking.Domain.Contracts;
 using VenueBooking.Domain.Shared;
 
 namespace VenueBooking.Domain.Interfaces.Services;

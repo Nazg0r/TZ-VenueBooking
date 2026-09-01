@@ -1,4 +1,4 @@
-namespace VenueBooking.Domain.Contracts;
+﻿namespace VenueBooking.Domain.Contracts;
 
 public sealed record BookingRequest(
     Guid VenueId,
