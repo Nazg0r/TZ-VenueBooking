@@ -25,14 +25,18 @@ public sealed class BookingService(
         var venue = await venueRepository.GetByIdAsync(request.VenueId, cancellationToken);
         if (venue is null) return VenueErrors.NotFound(request.VenueId);
 
+        // перевірка на наявність бронювань для даного залу в заданий період
         if (await bookingRepository.HasOverlapAsync(request.VenueId, request.StartUtc, request.EndUtc,
                 cancellationToken))
             return BookingErrors.VenueAlreadyBooked;
 
+        // отримання існуючих послуг з каталогу за їхніми ідентифікаторами
         var servicesResult = ResolveServices(venue, request.ServiceIds);
         if (servicesResult.IsFailure) return servicesResult.Error;
 
         var pricingRules = await pricingRuleRepository.GetAllAsync(cancellationToken);
+
+        // розрахунок вартості оренди залу на основі базової ціни та правил ціноутворення
         var rentalCost = priceCalculator.CalculateRentalCost(
             venue.BasePricePerHour,
             TimeOnly.FromDateTime(request.StartUtc),
@@ -65,6 +69,7 @@ public sealed class BookingService(
         return new BookingConfirmation(booking.Id, booking.RentalCost, booking.ServicesCost, booking.TotalCost);
     }
 
+    // Перевірка правильності періоду бронювання
     private static Result ValidatePeriod(BookingRequest request)
     {
         if (request.EndUtc <= request.StartUtc) return BookingErrors.InvalidPeriod;

@@ -10,6 +10,7 @@ namespace VenueBooking.DataAccess.Repositories;
 public class BookingRepository(VenueBookingContext context)
     : BaseRepository<Booking>(context), IBookingRepository
 {
+    // Отримання бронювань за період часу
     public async Task<IReadOnlyList<Booking>> GetByPeriodAsync(
         DateTime fromUtc,
         DateTime toUtc,
@@ -22,6 +23,7 @@ public class BookingRepository(VenueBookingContext context)
             .OrderBy(booking => booking.StartUtc)
             .ToListAsync(cancellationToken);
 
+    // Перевірка наявності перекриття бронювань для конкретного залу
     public Task<bool> HasOverlapAsync(
         Guid venueId,
         DateTime startUtc,

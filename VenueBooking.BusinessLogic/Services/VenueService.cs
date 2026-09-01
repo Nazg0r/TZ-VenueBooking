@@ -18,11 +18,14 @@ public sealed class VenueService(
     {
         if (request.EndUtc <= request.StartUtc) return BookingErrors.InvalidPeriod;
 
+        // отримання усіх залів
         var venues = await venueRepository.GetAllAsync(cancellationToken);
+        // отримання усіх бронювань, що перетинаються з заданим періодом
         var overlappingBookings =
             await bookingRepository.GetByPeriodAsync(request.StartUtc, request.EndUtc, cancellationToken);
         var bookedVenueIds = overlappingBookings.Select(booking => booking.VenueId).ToHashSet();
 
+        // фільтрація залів, які відповідають вимогам щодо місткості та не заброньовані
         IReadOnlyList<Venue> available = venues
             .Where(venue => venue.Capacity >= request.Capacity && !bookedVenueIds.Contains(venue.Id))
             .ToList();
@@ -35,6 +38,7 @@ public sealed class VenueService(
         IReadOnlyList<Guid>? serviceIds,
         CancellationToken cancellationToken = default)
     {
+        // отримання існуючих послуг з каталогу за їхніми ідентифікаторами
         var servicesResult = await ResolveCatalogServicesAsync(serviceIds, cancellationToken);
         if (servicesResult.IsFailure) return servicesResult.Error;
 
@@ -47,6 +51,7 @@ public sealed class VenueService(
 
     public async Task<Result> UpdateAsync(Venue updatedVenue, CancellationToken cancellationToken = default)
     {
+        // пошук та перевірка наявності залу для оновлення
         var existing = await venueRepository.GetByIdAsync(updatedVenue.Id, cancellationToken);
         if (existing is null) return VenueErrors.NotFound(updatedVenue.Id);
 

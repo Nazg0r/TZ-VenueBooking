@@ -10,6 +10,7 @@ namespace VenueBooking.DataAccess;
 
 public static class DependencyInjection
 {
+    // Розширення, яке агрегує підключення бази дани та реєстрацію репозиторіїв у контейнері DI
     public static IServiceCollection AddDataAccess(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection")

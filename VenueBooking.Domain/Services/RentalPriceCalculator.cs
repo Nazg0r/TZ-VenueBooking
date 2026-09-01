@@ -2,9 +2,8 @@ using VenueBooking.Domain.Models;
 
 namespace VenueBooking.Domain.Services;
 
-// Розбиває вікно бронювання на сегменти по межах цінових правил і застосовує
-// до кожного сегмента правило з найвищим пріоритетом (без правила — базова ставка).
-// Розрахований на бронювання в межах однієї доби.
+// Розбиває період бронювання на відрізки по межах цінових правил і застосовує
+// до кожного сегмента правило з найвищим пріоритетом, при відсутності правила — базова ставка.
 public sealed class RentalPriceCalculator
 {
     public decimal CalculateRentalCost(
@@ -17,15 +16,9 @@ public sealed class RentalPriceCalculator
 
         foreach (var rule in rules)
         {
-            if (rule.StartTime > start && rule.StartTime < end)
-            {
-                boundaries.Add(rule.StartTime);
-            }
+            if (rule.StartTime > start && rule.StartTime < end) boundaries.Add(rule.StartTime);
 
-            if (rule.EndTime > start && rule.EndTime < end)
-            {
-                boundaries.Add(rule.EndTime);
-            }
+            if (rule.EndTime > start && rule.EndTime < end) boundaries.Add(rule.EndTime);
         }
 
         var points = boundaries.ToArray();
@@ -46,10 +39,12 @@ public sealed class RentalPriceCalculator
         TimeOnly segmentStart,
         TimeOnly segmentEnd,
         IReadOnlyCollection<PricingRule> rules)
-        => rules
+    {
+        return rules
             .Where(rule => rule.StartTime <= segmentStart && rule.EndTime >= segmentEnd)
             .OrderByDescending(rule => rule.Priority)
             .Select(rule => rule.Multiplier)
             .DefaultIfEmpty(1m)
             .First();
+    }
 }

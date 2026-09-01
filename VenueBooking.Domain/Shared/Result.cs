@@ -29,6 +29,7 @@ public class Result
         Func<Error, TResult> onFailure)
         => IsSuccess ? onSuccess() : onFailure(Error);
 
+    // перевизначення оператору неявного перетворення Error для зручності створення результату
     public static implicit operator Result(Error error) => Failure(error);
 }
 
@@ -54,6 +55,7 @@ public sealed class Result<T> : Result
         Func<Error, TResult> onFailure)
         => IsSuccess ? onSuccess(Value) : onFailure(Error);
 
+    // перевизначення операторів для зручності створення результатів через неявне перетворення
     public static implicit operator Result<T>(T? value) => Create(value);
     public static implicit operator Result<T>(Error error) => Failure(error);
 }

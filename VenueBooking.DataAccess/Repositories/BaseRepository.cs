@@ -5,7 +5,7 @@ using VenueBooking.Domain.Interfaces.Repositories;
 using VenueBooking.Domain.Models;
 
 namespace VenueBooking.DataAccess.Repositories;
-
+// Базовий репозиторій, який реалізує загальні методи для роботи з сутностями в базі даних
 public class BaseRepository<T>(VenueBookingContext context) : IRepository<T>
     where T : Entity
 {

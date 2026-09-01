@@ -3,8 +3,10 @@ using VenueBooking.Domain.Shared;
 
 namespace VenueBooking.BusinessLogic.Services;
 
+// Допоміжний сервіс, який вміщує спільну логіку інших сервісів
 internal static class RequestedServices
 {
+    // Статичний метод для зіставлення запитаних і доступних послуг
     public static Result<IReadOnlyList<Service>> Match(
         IReadOnlyList<Guid>? requestedIds,
         IEnumerable<Service> available,
