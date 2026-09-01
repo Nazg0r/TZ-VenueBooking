@@ -1,0 +1,32 @@
+name: venuebooking
+
+services:
+  venuebooking.api:
+    image: ${DOCKER_REGISTRY-}venuebookingapi
+    build:
+      context: .
+      dockerfile: VenueBooking.Api/Dockerfile
+    depends_on:
+      venuebooking.db:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=venuebooking.db;Port=5432;Database=venuebookingdb;Username=postgres;Password=postgres
+
+  venuebooking.db:
+    image: postgres:17-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=venuebookingdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - venuebooking.db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d venuebookingdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  venuebooking.db-data:

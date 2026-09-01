@@ -1,4 +1,7 @@
 <Solution>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
   <Project Path="VenueBooking.Api/VenueBooking.Api.csproj" />
   <Project Path="VenueBooking.BusinessLogic/VenueBooking.BusinessLogic.csproj" />
   <Project Path="VenueBooking.DataAccess/VenueBooking.DataAccess.csproj" />
