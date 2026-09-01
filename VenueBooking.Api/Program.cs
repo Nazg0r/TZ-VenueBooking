@@ -1,4 +1,5 @@
-﻿using VenueBooking.Api.MinimalAPIs;
+﻿using VenueBooking.Api.Extensions;
+using VenueBooking.Api.MinimalAPIs;
 using VenueBooking.BusinessLogic;
 using VenueBooking.DataAccess;
 
@@ -13,7 +14,7 @@ builder.Services.AddProblemDetails();
 // Підключення Validation для валідації DTO через анотації
 builder.Services.AddValidation();
 // Підключення OpenAPI для генерації документації API
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApiDocumentation();
 
 var app = builder.Build();
 
@@ -29,7 +30,7 @@ app.UseHttpsRedirection();
 app.MapOpenApi();
 app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "VenueBooking API v1"));
 
-// Маршрути для VenueBooking API 
+// Маршрути для VenueBooking API
 app.MapApiEndpoints();
 
 app.Run();
