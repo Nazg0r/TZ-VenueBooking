@@ -8,6 +8,7 @@ public static class ApiEndpoints
         app.MapVenueEndpoints();
         app.MapServiceEndpoints();
         app.MapBookingEndpoints();
+        app.MapReportEndpoints();
 
         return app;
     }
