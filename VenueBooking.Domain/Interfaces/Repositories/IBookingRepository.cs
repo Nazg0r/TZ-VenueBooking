@@ -14,4 +14,11 @@ public interface IBookingRepository : IRepository<Booking>
         DateTime startUtc,
         DateTime endUtc,
         CancellationToken cancellationToken = default);
+
+    // Активні бронювання для звітів: опційно по залу та по межах періоду (за StartUtc).
+    Task<IReadOnlyList<Booking>> GetForReportsAsync(
+        Guid? venueId,
+        DateTime? fromUtc,
+        DateTime? toUtc,
+        CancellationToken cancellationToken = default);
 }
